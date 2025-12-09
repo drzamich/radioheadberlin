@@ -69,6 +69,18 @@ if __name__ == "__main__":
         '''
     })
     
+    # Initial manual setup
+    print("\n⏳ Opening page in browser...")
+    print("Please manually solve any CAPTCHA or login if needed.")
+    print("Once the page loads correctly, press ENTER to start monitoring...")
+    
+    url = "https://www.fansale.de/tickets/all/radiohead/520"
+    driver.get(url)
+    
+    input("\nPress ENTER when page is ready: ")
+    print("\n✓ Starting automated monitoring...")
+    print("-" * 60)
+    
     try:
         while True:
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
