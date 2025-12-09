@@ -9,9 +9,9 @@ def check_page_for_date():
     url = "https://www.fansale.de/tickets/all/radiohead/520"
     
     try:
-        # Use curl to fetch the page
+        # Use curl to fetch the page (force HTTP/1.1 to avoid stream issues)
         result = subprocess.run(
-            ['curl', '-s', '-L', '-A', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36', url],
+            ['curl', '-s', '-L', '--http1.1', '-A', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36', url],
             capture_output=True,
             text=True,
             timeout=30
