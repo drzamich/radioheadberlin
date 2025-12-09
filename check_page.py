@@ -10,8 +10,11 @@ def check_page_for_date():
     url = "https://www.fansale.de/tickets/all/radiohead/520"
     
     try:
-        # Fetch the page
-        response = requests.get(url, timeout=10)
+        # Fetch the page with browser-like headers
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
+        response = requests.get(url, headers=headers, timeout=10)
         response.raise_for_status()
         
         # Parse the content
