@@ -17,7 +17,7 @@ def check_page_for_date():
     
     try:
         # Read the curl command from file
-        with open('/Users/mdrzazga/Desktop/radiohead/curl_command.txt', 'r') as f:
+        with open('./curl_command.txt', 'r') as f:
             curl_command = f.read().strip()
         
         # Execute the curl command
