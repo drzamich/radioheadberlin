@@ -2,7 +2,12 @@
 import subprocess
 import shlex
 import time
+import os
 from datetime import datetime
+
+def play_sound():
+    """Play system alert sound on macOS"""
+    os.system('afplay /System/Library/Sounds/Basso.aiff')
 
 def check_page_for_date():
     """
@@ -48,8 +53,10 @@ if __name__ == "__main__":
             
             if not success:
                 print(f"🔴 [{timestamp}] ERROR: Request failed - {response}")
+                play_sound()
             elif not has_radiohead:
                 print(f"⚠️  [{timestamp}] WARNING: Page doesn't contain 'Radiohead'")
+                play_sound()
             elif found_date:
                 print(f"✅ [{timestamp}] SUCCESS: Found '12. Dez' on page!")
             else:
