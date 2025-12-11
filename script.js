@@ -15,7 +15,7 @@
   const FALLBACK_TEXT = "Reihe";
   const CHECKOUT_TEXT = "ZUR KASSE";
   const CHECK_INTERVAL = 200; // Check every 200ms
-  const CHECKOUT_TIMEOUT = 5000; // Wait 5 seconds for checkout button
+  const CHECKOUT_TIMEOUT = 2000; // Wait 5 seconds for checkout button
 
   let clicked = false;
   let checkoutClicked = false;
