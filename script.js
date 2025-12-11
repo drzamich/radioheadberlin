@@ -11,12 +11,20 @@
 (function () {
   "use strict";
 
+  // Check if script is already running
+  if (window.__radioheadScriptRunning) {
+    console.log("Script is already running, exiting");
+    return;
+  }
+  window.__radioheadScriptRunning = true;
+
   const PRIMARY_TEXT = "Innenraum";
   const FALLBACK_TEXT = "Reihe";
   const CHECKOUT_TEXT = "ZUR KASSE";
   const CHECK_INTERVAL = 200; // Check every 200ms
   const CHECKOUT_TIMEOUT = 4000; // Wait 2 seconds for checkout button
   const RELOAD_TIMEOUT = 7000; // Wait 7 seconds for initial text
+  const SUCCESS_URL = "https://www.youtube.com/watch?v=jNY_wLukVW0";
 
   let clicked = false;
   let checkoutClicked = false;
@@ -71,6 +79,13 @@
         console.log(`Successfully clicked "${CHECKOUT_TEXT}"`);
         checkoutClicked = true;
         clearInterval(checkoutInterval);
+        
+        // Open success URL in new tab
+        console.log(`Opening ${SUCCESS_URL} in new tab`);
+        window.open(SUCCESS_URL, "_blank");
+        
+        // Stop the script
+        window.__radioheadScriptRunning = false;
         return;
       }
 
@@ -85,7 +100,7 @@
         // Wait 7 seconds and reload the page
         setTimeout(() => {
           console.log("Reloading page after going back");
-          // window.location.reload();
+          window.location.reload();
         }, RELOAD_TIMEOUT);
       }
     }, CHECK_INTERVAL);
@@ -123,7 +138,7 @@
       if (Date.now() - startTime > RELOAD_TIMEOUT) {
         console.log(`No text found after ${RELOAD_TIMEOUT}ms, reloading page`);
         clearInterval(checkInterval);
-        // window.location.reload();
+        window.location.reload();
       }
     }, CHECK_INTERVAL);
   }
