@@ -39,7 +39,7 @@
 
   // Function to find and click checkout button
   function findAndClickCheckout() {
-    const allElements = document.querySelectorAll("*");
+    const allElements = document.querySelectorAll(".DetailCSection *");
 
     for (let element of allElements) {
       const textContent = element.textContent || "";
@@ -57,7 +57,7 @@
   // Start checking for checkout button
   function startCheckoutCheck() {
     const startTime = Date.now();
-    
+
     const checkoutInterval = setInterval(() => {
       if (checkoutClicked) {
         clearInterval(checkoutInterval);
@@ -73,7 +73,9 @@
 
       // If timeout exceeded, go back in history
       if (Date.now() - startTime > CHECKOUT_TIMEOUT) {
-        console.log(`"${CHECKOUT_TEXT}" not found after ${CHECKOUT_TIMEOUT}ms, going back in history`);
+        console.log(
+          `"${CHECKOUT_TEXT}" not found after ${CHECKOUT_TIMEOUT}ms, going back in history`
+        );
         clearInterval(checkoutInterval);
         window.history.back();
       }
