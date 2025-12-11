@@ -46,6 +46,46 @@
     audio.play().catch(err => console.log("[RADIOBOT] ", "Audio play failed:", err));
   }
 
+  // Simulate real mouse click
+  function simulateRealClick(element) {
+    const rect = element.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    
+    // Dispatch multiple events to simulate real click
+    const mouseDownEvent = new MouseEvent('mousedown', {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+      clientX: x,
+      clientY: y,
+      button: 0
+    });
+    
+    const mouseUpEvent = new MouseEvent('mouseup', {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+      clientX: x,
+      clientY: y,
+      button: 0
+    });
+    
+    const clickEvent = new MouseEvent('click', {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+      clientX: x,
+      clientY: y,
+      button: 0
+    });
+    
+    element.dispatchEvent(mouseDownEvent);
+    element.dispatchEvent(mouseUpEvent);
+    element.dispatchEvent(clickEvent);
+    element.click();
+  }
+
   // Function to find and click Card element containing text
   function findAndClick(text) {
     const cards = document.querySelectorAll(".OfferEntry-SeatDescription");
@@ -79,7 +119,9 @@
           `Found and clicking checkout button: "${CHECKOUT_TEXT}"`
         );
         console.log("[RADIOBOT] ", element);
-        element.click();
+        
+        simulateRealClick(element);
+        
         return true;
       }
     }
