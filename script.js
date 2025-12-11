@@ -24,7 +24,7 @@
   const CHECK_INTERVAL = 200; // Check every 200ms
   const CHECKOUT_TIMEOUT = 4000; // Wait 2 seconds for checkout button
   const RELOAD_TIMEOUT = 7000; // Wait 7 seconds for initial text
-  const SUCCESS_URL = "https://www.youtube.com/watch?v=jNY_wLukVW0";
+  const SUCCESS_URL = "https://www.youtube.com/watch?v=jNY_wLukVW0?autoplay=1";
 
   let clicked = false;
   let checkoutClicked = false;
@@ -79,11 +79,11 @@
         console.log(`Successfully clicked "${CHECKOUT_TEXT}"`);
         checkoutClicked = true;
         clearInterval(checkoutInterval);
-        
+
         // Open success URL in new tab
         console.log(`Opening ${SUCCESS_URL} in new tab`);
         window.open(SUCCESS_URL, "_blank");
-        
+
         // Stop the script
         window.__radioheadScriptRunning = false;
         return;
