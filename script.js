@@ -25,6 +25,7 @@
   const CHECK_INTERVAL = 50; // Check every 200ms
   const CHECKOUT_TIMEOUT = 4000; // Wait 2 seconds for checkout button
   const RELOAD_TIMEOUT = 12 * 1000; // Wait 12 seconds for initial text
+  const SUCCESS_AUDIO_URL = "https://www.myinstants.com/media/sounds/mlg-airhorn.mp3";
   const SUCCESS_URL = "https://www.youtube.com/watch?v=jNY_wLukVW0?autoplay=1";
   const ACCESS_DENIED_URL =
     "https://www.youtube.com/watch?v=w7nrYizajmk?autoplay=1";
@@ -35,6 +36,14 @@
   function openUrlInNewTab(url) {
     console.log("[RADIOBOT] open url in new tab", url);
     window.open(url, "_blank");
+  }
+
+  // Play success notification
+  function playSuccessNotification() {
+    console.log("[RADIOBOT] ", "Playing success audio");
+    const audio = new Audio(SUCCESS_AUDIO_URL);
+    audio.volume = 1.0;
+    audio.play().catch(err => console.log("[RADIOBOT] ", "Audio play failed:", err));
   }
 
   // Function to find and click Card element containing text
@@ -93,9 +102,7 @@
         checkoutClicked = true;
         clearInterval(checkoutInterval);
 
-        // Open success URL in new tab
-        console.log("[RADIOBOT] ", `Opening ${SUCCESS_URL} in new tab`);
-        openUrlInNewTab(SUCCESS_URL);
+        playSuccessNotification();
 
         // Stop the script
         window.__radioheadScriptRunning = false;
