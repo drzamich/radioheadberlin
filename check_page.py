@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
+import undetected_chromedriver as uc
 import time
 import os
 from datetime import datetime
@@ -37,37 +35,15 @@ def check_page_for_date(driver):
         return (False, False, False, str(e))
 
 if __name__ == "__main__":
-    print("Starting monitoring with Selenium... Press Ctrl+C to stop")
+    print("Starting monitoring with undetected Chrome... Press Ctrl+C to stop")
     print("Setting up Chrome driver...")
     print("-" * 60)
     
-    # Set up Chrome options
-    chrome_options = Options()
-    # chrome_options.add_argument('--headless')  # Uncomment to run in background
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument('--disable-blink-features=AutomationControlled')
-    chrome_options.add_argument('--disable-infobars')
-    chrome_options.add_argument('--start-maximized')
-    chrome_options.add_argument('--disable-extensions')
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument(f'user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
-    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    chrome_options.add_experimental_option('useAutomationExtension', False)
+    # Create undetected Chrome driver
+    options = uc.ChromeOptions()
+    # options.add_argument('--headless=new')  # Uncomment to run in background
     
-    # Create driver
-    driver = webdriver.Chrome(options=chrome_options)
-    
-    # Execute script to hide automation
-    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-    driver.execute_cdp_cmd('Network.setUserAgentOverride', {"userAgent": 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'})
-    driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument', {
-        'source': '''
-            delete window.cdc_adoQpoasnfa76pfcZLmcfl_Array;
-            delete window.cdc_adoQpoasnfa76pfcZLmcfl_Promise;
-            delete window.cdc_adoQpoasnfa76pfcZLmcfl_Symbol;
-        '''
-    })
+    driver = uc.Chrome(options=options)
     
     # Initial manual setup
     print("\n⏳ Opening page in browser...")
