@@ -67,14 +67,16 @@ if __name__ == "__main__":
                 play_sound()
             elif not has_radiohead:
                 print(f"⚠️  [{timestamp}] WARNING: Page doesn't contain 'Radiohead'")
+                print(response)
                 play_sound()
             elif found_date:
                 print(f"✅ [{timestamp}] SUCCESS: Found '12. Dez' on page!")
+                play_sound()
             else:
                 print(f"✓  [{timestamp}] OK: Radiohead present, but no '12. Dez' yet")
             
-            time.sleep(30)
-            
+            time.sleep(10)
+        
     except KeyboardInterrupt:
         print("\n\nMonitoring stopped.")
     finally:
