@@ -26,7 +26,8 @@
   const CHECKOUT_TIMEOUT = 4000; // Wait 2 seconds for checkout button
   const RELOAD_TIMEOUT = 7000; // Wait 7 seconds for initial text
   const SUCCESS_URL = "https://www.youtube.com/watch?v=jNY_wLukVW0?autoplay=1";
-  const ACCESS_DENIED_URL = "http://onet.pl";
+  const ACCESS_DENIED_URL =
+    "https://www.youtube.com/watch?v=w7nrYizajmk?autoplay=1";
 
   let clicked = false;
   let checkoutClicked = false;
@@ -119,7 +120,10 @@
     const h1Elements = document.querySelectorAll("h1");
     for (let h1 of h1Elements) {
       if (h1.textContent.includes(ACCESS_DENIED_TEXT)) {
-        console.log("[RADIOBOT] ", `Found "${ACCESS_DENIED_TEXT}", redirecting to ${ACCESS_DENIED_URL}`);
+        console.log(
+          "[RADIOBOT] ",
+          `Found "${ACCESS_DENIED_TEXT}", redirecting to ${ACCESS_DENIED_URL}`
+        );
         window.open(ACCESS_DENIED_URL, "_blank");
         return true;
       }
