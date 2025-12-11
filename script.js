@@ -80,11 +80,11 @@
         );
         clearInterval(checkoutInterval);
         window.history.back();
-        
+
         // Wait 7 seconds and reload the page
         setTimeout(() => {
           console.log("Reloading page after going back");
-          window.location.reload();
+          // window.location.reload();
         }, RELOAD_TIMEOUT);
       }
     }, CHECK_INTERVAL);
@@ -93,7 +93,7 @@
   // Start checking for texts
   function startScript() {
     const startTime = Date.now();
-    
+
     const checkInterval = setInterval(() => {
       if (clicked) {
         clearInterval(checkInterval);
@@ -120,11 +120,9 @@
 
       // If timeout exceeded, reload the page
       if (Date.now() - startTime > RELOAD_TIMEOUT) {
-        console.log(
-          `No text found after ${RELOAD_TIMEOUT}ms, reloading page`
-        );
+        console.log(`No text found after ${RELOAD_TIMEOUT}ms, reloading page`);
         clearInterval(checkInterval);
-        window.location.reload();
+        // window.location.reload();
       }
     }, CHECK_INTERVAL);
   }
