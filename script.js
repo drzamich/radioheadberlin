@@ -34,6 +34,7 @@
         return true;
       }
     }
+    console.log(text, "not found");
     return false;
   }
 
@@ -112,6 +113,7 @@
 
   // Wait for DOM to be ready
   if (document.readyState === "loading") {
+    console.log("starting srcript");
     document.addEventListener("DOMContentLoaded", startScript);
   } else {
     startScript();
