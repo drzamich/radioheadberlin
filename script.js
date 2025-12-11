@@ -13,7 +13,7 @@
 
   // Check if script is already running
   if (window.__radioheadScriptRunning) {
-    console.log("Script is already running, exiting");
+    console.log("[RADIOBOT] ", "Script is already running, exiting");
     return;
   }
   window.__radioheadScriptRunning = true;
@@ -37,13 +37,15 @@
       const textContent = card.textContent || "";
 
       if (textContent.includes(text)) {
-        console.log(`Found and clicking Row with text: "${text}"`);
-        console.log(card);
+        console.log(
+          "[RADIOBOT] ",
+          `Found and clicking Row with text: "${text}"`
+        );
         card.click();
         return true;
       }
     }
-    console.log(text, "not found");
+    console.log("[RADIOBOT] ", text, "not found");
     return false;
   }
 
@@ -55,8 +57,11 @@
       const textContent = element.textContent || "";
 
       if (textContent.includes(CHECKOUT_TEXT)) {
-        console.log(`Found and clicking checkout button: "${CHECKOUT_TEXT}"`);
-        console.log(element);
+        console.log(
+          "[RADIOBOT] ",
+          `Found and clicking checkout button: "${CHECKOUT_TEXT}"`
+        );
+        console.log("[RADIOBOT] ", element);
         element.click();
         return true;
       }
@@ -66,7 +71,7 @@
 
   // Start checking for checkout button
   function startCheckoutCheck() {
-    console.log("Loocking for", CHECKOUT_TEXT);
+    console.log("[RADIOBOT] ", "Looking for", CHECKOUT_TEXT);
     const startTime = Date.now();
 
     const checkoutInterval = setInterval(() => {
@@ -76,12 +81,12 @@
       }
 
       if (findAndClickCheckout()) {
-        console.log(`Successfully clicked "${CHECKOUT_TEXT}"`);
+        console.log("[RADIOBOT] ", `Successfully clicked "${CHECKOUT_TEXT}"`);
         checkoutClicked = true;
         clearInterval(checkoutInterval);
 
         // Open success URL in new tab
-        console.log(`Opening ${SUCCESS_URL} in new tab`);
+        console.log("[RADIOBOT] ", `Opening ${SUCCESS_URL} in new tab`);
         window.open(SUCCESS_URL, "_blank");
 
         // Stop the script
@@ -92,16 +97,17 @@
       // If timeout exceeded, go back in history
       if (Date.now() - startTime > CHECKOUT_TIMEOUT) {
         console.log(
+          "[RADIOBOT] ",
           `"${CHECKOUT_TEXT}" not found after ${CHECKOUT_TIMEOUT}ms, going back in history`
         );
         clearInterval(checkoutInterval);
         window.history.back();
 
+        console.log("[RADIOBOT] ", "Reloading page...");
         // Wait 7 seconds and reload the page
         setTimeout(() => {
-          console.log("Reloading page after going back");
           window.location.reload();
-        }, RELOAD_TIMEOUT);
+        }, RELOAD_TIMEOUT - 4000);
       }
     }, CHECK_INTERVAL);
   }
@@ -118,7 +124,7 @@
 
       // Try primary text first
       if (findAndClick(PRIMARY_TEXT)) {
-        console.log(`Successfully clicked "${PRIMARY_TEXT}"`);
+        console.log("[RADIOBOT] ", `Successfully clicked "${PRIMARY_TEXT}"`);
         clicked = true;
         clearInterval(checkInterval);
         startCheckoutCheck();
@@ -127,7 +133,10 @@
 
       // If primary not found, immediately try fallback
       if (findAndClick(FALLBACK_TEXT)) {
-        console.log(`Successfully clicked fallback "${FALLBACK_TEXT}"`);
+        console.log(
+          "[RADIOBOT] ",
+          `Successfully clicked fallback "${FALLBACK_TEXT}"`
+        );
         clicked = true;
         clearInterval(checkInterval);
         startCheckoutCheck();
@@ -136,7 +145,10 @@
 
       // If timeout exceeded, reload the page
       if (Date.now() - startTime > RELOAD_TIMEOUT) {
-        console.log(`No text found after ${RELOAD_TIMEOUT}ms, reloading page`);
+        console.log(
+          "[RADIOBOT] ",
+          `No text found after ${RELOAD_TIMEOUT}ms, reloading page`
+        );
         clearInterval(checkInterval);
         window.location.reload();
       }
@@ -145,7 +157,7 @@
 
   // Wait for DOM to be ready
   if (document.readyState === "loading") {
-    console.log("starting srcript");
+    console.log("[RADIOBOT] ", "starting srcript");
     document.addEventListener("DOMContentLoaded", startScript);
   } else {
     startScript();
