@@ -15,7 +15,8 @@
   const FALLBACK_TEXT = "Reihe";
   const CHECKOUT_TEXT = "ZUR KASSE";
   const CHECK_INTERVAL = 200; // Check every 200ms
-  const CHECKOUT_TIMEOUT = 2000; // Wait 5 seconds for checkout button
+  const CHECKOUT_TIMEOUT = 2000; // Wait 2 seconds for checkout button
+  const INITIAL_TIMEOUT = 10000; // Wait 10 seconds for initial text
 
   let clicked = false;
   let checkoutClicked = false;
@@ -85,6 +86,8 @@
 
   // Start checking for texts
   function startScript() {
+    const startTime = Date.now();
+    
     const checkInterval = setInterval(() => {
       if (clicked) {
         clearInterval(checkInterval);
@@ -107,6 +110,15 @@
         clearInterval(checkInterval);
         startCheckoutCheck();
         return;
+      }
+
+      // If timeout exceeded, reload the page
+      if (Date.now() - startTime > INITIAL_TIMEOUT) {
+        console.log(
+          `No text found after ${INITIAL_TIMEOUT}ms, reloading page`
+        );
+        clearInterval(checkInterval);
+        window.location.reload();
       }
     }, CHECK_INTERVAL);
   }
