@@ -15,7 +15,7 @@
   const FALLBACK_TEXT = "Reihe";
   const CHECKOUT_TEXT = "ZUR KASSE";
   const CHECK_INTERVAL = 200; // Check every 200ms
-  const CHECKOUT_TIMEOUT = 2000; // Wait 2 seconds for checkout button
+  const CHECKOUT_TIMEOUT = 4000; // Wait 2 seconds for checkout button
   const RELOAD_TIMEOUT = 7000; // Wait 7 seconds for initial text
 
   let clicked = false;
@@ -58,6 +58,7 @@
 
   // Start checking for checkout button
   function startCheckoutCheck() {
+    console.log("Loocking for", CHECKOUT_TEXT);
     const startTime = Date.now();
 
     const checkoutInterval = setInterval(() => {
