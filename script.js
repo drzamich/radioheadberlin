@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Waits for "Innenraum" text to appear and clicks it, falls back to "Reihe" if not found
-// @match        *://*/*
+// @match        https://www.fansale.de/*
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
