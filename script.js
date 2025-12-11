@@ -16,7 +16,7 @@
   const CHECKOUT_TEXT = "ZUR KASSE";
   const CHECK_INTERVAL = 200; // Check every 200ms
   const CHECKOUT_TIMEOUT = 2000; // Wait 2 seconds for checkout button
-  const INITIAL_TIMEOUT = 10000; // Wait 10 seconds for initial text
+  const RELOAD_TIMEOUT = 7000; // Wait 7 seconds for initial text
 
   let clicked = false;
   let checkoutClicked = false;
@@ -80,6 +80,12 @@
         );
         clearInterval(checkoutInterval);
         window.history.back();
+        
+        // Wait 7 seconds and reload the page
+        setTimeout(() => {
+          console.log("Reloading page after going back");
+          window.location.reload();
+        }, RELOAD_TIMEOUT);
       }
     }, CHECK_INTERVAL);
   }
@@ -113,9 +119,9 @@
       }
 
       // If timeout exceeded, reload the page
-      if (Date.now() - startTime > INITIAL_TIMEOUT) {
+      if (Date.now() - startTime > RELOAD_TIMEOUT) {
         console.log(
-          `No text found after ${INITIAL_TIMEOUT}ms, reloading page`
+          `No text found after ${RELOAD_TIMEOUT}ms, reloading page`
         );
         clearInterval(checkInterval);
         window.location.reload();
