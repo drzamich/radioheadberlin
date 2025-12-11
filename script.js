@@ -25,7 +25,8 @@
   const CHECK_INTERVAL = 50; // Check every 200ms
   const CHECKOUT_TIMEOUT = 4000; // Wait 2 seconds for checkout button
   const RELOAD_TIMEOUT = 12 * 1000; // Wait 12 seconds for initial text
-  const SUCCESS_AUDIO_URL = "https://www.myinstants.com/media/sounds/mlg-airhorn.mp3";
+  const SUCCESS_AUDIO_URL =
+    "https://www.myinstants.com/media/sounds/mlg-airhorn.mp3";
   const SUCCESS_URL = "https://www.youtube.com/watch?v=jNY_wLukVW0?autoplay=1";
   const ACCESS_DENIED_URL =
     "https://www.youtube.com/watch?v=w7nrYizajmk?autoplay=1";
@@ -43,7 +44,9 @@
     console.log("[RADIOBOT] ", "Playing success audio");
     const audio = new Audio(SUCCESS_AUDIO_URL);
     audio.volume = 1.0;
-    audio.play().catch(err => console.log("[RADIOBOT] ", "Audio play failed:", err));
+    audio
+      .play()
+      .catch((err) => console.log("[RADIOBOT] ", "Audio play failed:", err));
   }
 
   // Simulate real mouse click
@@ -51,35 +54,35 @@
     const rect = element.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
-    
+
     // Dispatch multiple events to simulate real click
-    const mouseDownEvent = new MouseEvent('mousedown', {
+    const mouseDownEvent = new MouseEvent("mousedown", {
       view: window,
       bubbles: true,
       cancelable: true,
       clientX: x,
       clientY: y,
-      button: 0
+      button: 0,
     });
-    
-    const mouseUpEvent = new MouseEvent('mouseup', {
+
+    const mouseUpEvent = new MouseEvent("mouseup", {
       view: window,
       bubbles: true,
       cancelable: true,
       clientX: x,
       clientY: y,
-      button: 0
+      button: 0,
     });
-    
-    const clickEvent = new MouseEvent('click', {
+
+    const clickEvent = new MouseEvent("click", {
       view: window,
       bubbles: true,
       cancelable: true,
       clientX: x,
       clientY: y,
-      button: 0
+      button: 0,
     });
-    
+
     element.dispatchEvent(mouseDownEvent);
     element.dispatchEvent(mouseUpEvent);
     element.dispatchEvent(clickEvent);
@@ -114,14 +117,11 @@
       const textContent = element.textContent || "";
 
       if (textContent.includes(CHECKOUT_TEXT)) {
-        console.log(
-          "[RADIOBOT] ",
-          `Found and clicking checkout button: "${CHECKOUT_TEXT}"`
-        );
+        console.log("[RADIOBOT] ", `Found checkout button: "${CHECKOUT_TEXT}"`);
         console.log("[RADIOBOT] ", element);
-        
-        simulateRealClick(element);
-        
+
+        // simulateRealClick(element);
+
         return true;
       }
     }
