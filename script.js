@@ -21,10 +21,12 @@
   const PRIMARY_TEXT = "Innenraum";
   const FALLBACK_TEXT = "Reihe";
   const CHECKOUT_TEXT = "ZUR KASSE";
+  const ACCESS_DENIED_TEXT = "Access Denied";
   const CHECK_INTERVAL = 200; // Check every 200ms
   const CHECKOUT_TIMEOUT = 4000; // Wait 2 seconds for checkout button
   const RELOAD_TIMEOUT = 7000; // Wait 7 seconds for initial text
   const SUCCESS_URL = "https://www.youtube.com/watch?v=jNY_wLukVW0?autoplay=1";
+  const ACCESS_DENIED_URL = "http://onet.pl";
 
   let clicked = false;
   let checkoutClicked = false;
@@ -112,12 +114,36 @@
     }, CHECK_INTERVAL);
   }
 
+  // Check for Access Denied
+  function checkAccessDenied() {
+    const h1Elements = document.querySelectorAll("h1");
+    for (let h1 of h1Elements) {
+      if (h1.textContent.includes(ACCESS_DENIED_TEXT)) {
+        console.log("[RADIOBOT] ", `Found "${ACCESS_DENIED_TEXT}", redirecting to ${ACCESS_DENIED_URL}`);
+        window.open(ACCESS_DENIED_URL, "_blank");
+        return true;
+      }
+    }
+    return false;
+  }
+
   // Start checking for texts
   function startScript() {
+    // Check for Access Denied first
+    if (checkAccessDenied()) {
+      return;
+    }
+
     const startTime = Date.now();
 
     const checkInterval = setInterval(() => {
       if (clicked) {
+        clearInterval(checkInterval);
+        return;
+      }
+
+      // Check for Access Denied on each iteration
+      if (checkAccessDenied()) {
         clearInterval(checkInterval);
         return;
       }
