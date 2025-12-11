@@ -19,18 +19,23 @@
   window.__radioheadScriptRunning = true;
 
   const PRIMARY_TEXT = "Innenraum";
-  const FALLBACK_TEXT = "Reihe";
+  const FALLBACK_TEXT = "Unterrang";
   const CHECKOUT_TEXT = "ZUR KASSE";
   const ACCESS_DENIED_TEXT = "Access Denied";
-  const CHECK_INTERVAL = 200; // Check every 200ms
+  const CHECK_INTERVAL = 50; // Check every 200ms
   const CHECKOUT_TIMEOUT = 4000; // Wait 2 seconds for checkout button
-  const RELOAD_TIMEOUT = 7000; // Wait 7 seconds for initial text
+  const RELOAD_TIMEOUT = 12 * 1000; // Wait 12 seconds for initial text
   const SUCCESS_URL = "https://www.youtube.com/watch?v=jNY_wLukVW0?autoplay=1";
   const ACCESS_DENIED_URL =
     "https://www.youtube.com/watch?v=w7nrYizajmk?autoplay=1";
 
   let clicked = false;
   let checkoutClicked = false;
+
+  function openUrlInNewTab(url) {
+    console.log("[RADIOBOT] open url in new tab", url);
+    window.open(url, "_blank");
+  }
 
   // Function to find and click Card element containing text
   function findAndClick(text) {
@@ -54,7 +59,7 @@
 
   // Function to find and click checkout button
   function findAndClickCheckout() {
-    const allElements = document.querySelectorAll(".DetailCSection *");
+    const allElements = document.querySelectorAll(".DetailCSection button");
 
     for (let element of allElements) {
       const textContent = element.textContent || "";
@@ -90,7 +95,7 @@
 
         // Open success URL in new tab
         console.log("[RADIOBOT] ", `Opening ${SUCCESS_URL} in new tab`);
-        window.open(SUCCESS_URL, "_blank");
+        openUrlInNewTab(SUCCESS_URL);
 
         // Stop the script
         window.__radioheadScriptRunning = false;
@@ -124,7 +129,7 @@
           "[RADIOBOT] ",
           `Found "${ACCESS_DENIED_TEXT}", redirecting to ${ACCESS_DENIED_URL}`
         );
-        window.open(ACCESS_DENIED_URL, "_blank");
+        openUrlInNewTab(ACCESS_DENIED_URL, "_blank");
         return true;
       }
     }
