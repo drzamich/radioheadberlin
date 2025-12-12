@@ -25,7 +25,7 @@
     "https://www.myinstants.com/media/sounds/windows-xp-error.mp3";
 
   const PRIMARY_TEXT = "Innenraum";
-  const FALLBACK_TEXT = "Unterrang";
+  const FALLBACK_TEXT = "NONON";
   const CHECKOUT_TEXT = "ZUR KASSE";
   const ACCESS_DENIED_TEXT = "Access Denied";
   const CHECK_INTERVAL = 50; // Check every 200ms
