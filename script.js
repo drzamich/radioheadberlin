@@ -18,75 +18,42 @@
   }
   window.__radioheadScriptRunning = true;
 
+  const MEOW_SONG = "https://www.myinstants.com/media/sounds/sad-meow-song.mp3";
+  const FORMULA_SOUND =
+    "https://www.myinstants.com/media/sounds/formula-1-radio-notification.mp3";
+  const ERROR_SOUND =
+    "https://www.myinstants.com/media/sounds/windows-xp-error.mp3";
+
   const PRIMARY_TEXT = "Innenraum";
   const FALLBACK_TEXT = "Unterrang";
   const CHECKOUT_TEXT = "ZUR KASSE";
   const ACCESS_DENIED_TEXT = "Access Denied";
   const CHECK_INTERVAL = 50; // Check every 200ms
   const CHECKOUT_TIMEOUT = 4000; // Wait 2 seconds for checkout button
-  const RELOAD_TIMEOUT = 12 * 1000; // Wait 12 seconds for initial text
-  const SUCCESS_AUDIO_URL =
-    "https://www.myinstants.com/media/sounds/sad-meow-song.mp3";
-  const SUCCESS_URL = "https://www.youtube.com/watch?v=jNY_wLukVW0?autoplay=1";
-  const ACCESS_DENIED_URL =
-    "https://www.youtube.com/watch?v=w7nrYizajmk?autoplay=1";
+  const RELOAD_TIMEOUT = 20 * 1000; // Wait 12 seconds for initial text
+  const SUCCESS_AUDIO_URL = FORMULA_SOUND;
 
   let clicked = false;
   let checkoutClicked = false;
 
-  function openUrlInNewTab(url) {
-    console.log("[RADIOBOT] open url in new tab", url);
-    window.open(url, "_blank");
-  }
-
-  // Play success notification
-  function playSuccessNotification() {
-    console.log("[RADIOBOT] ", "Playing success audio");
-    const audio = new Audio(SUCCESS_AUDIO_URL);
+  // Play notification
+  function playSound(url) {
+    console.log("[RADIOBOT] ", "Playing audio");
+    const audio = new Audio(url);
     audio.volume = 1.0;
     audio
       .play()
       .catch((err) => console.log("[RADIOBOT] ", "Audio play failed:", err));
   }
 
-  // Simulate real mouse click
-  function simulateRealClick(element) {
-    const rect = element.getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-
-    // Dispatch multiple events to simulate real click
-    const mouseDownEvent = new MouseEvent("mousedown", {
-      view: window,
-      bubbles: true,
-      cancelable: true,
-      clientX: x,
-      clientY: y,
-      button: 0,
-    });
-
-    const mouseUpEvent = new MouseEvent("mouseup", {
-      view: window,
-      bubbles: true,
-      cancelable: true,
-      clientX: x,
-      clientY: y,
-      button: 0,
-    });
-
-    const clickEvent = new MouseEvent("click", {
-      view: window,
-      bubbles: true,
-      cancelable: true,
-      clientX: x,
-      clientY: y,
-      button: 0,
-    });
-
-    element.dispatchEvent(mouseDownEvent);
-    element.dispatchEvent(mouseUpEvent);
-    element.dispatchEvent(clickEvent);
-    element.click();
+  function notify(audio_url) {
+    playSound(audio_url);
+    setTimeout(() => {
+      playSound(audio_url);
+    }, 3 * 1000);
+    setTimeout(() => {
+      playSound(audio_url);
+    }, 6 * 1000);
   }
 
   // Function to find and click Card element containing text
@@ -144,7 +111,7 @@
         checkoutClicked = true;
         clearInterval(checkoutInterval);
 
-        playSuccessNotification();
+        notify(SUCCESS_AUDIO_URL);
 
         // Stop the script
         window.__radioheadScriptRunning = false;
@@ -178,7 +145,7 @@
           "[RADIOBOT] ",
           `Found "${ACCESS_DENIED_TEXT}", redirecting to ${ACCESS_DENIED_URL}`
         );
-        openUrlInNewTab(ACCESS_DENIED_URL, "_blank");
+        notify(ERROR_SOUND);
         return true;
       }
     }
