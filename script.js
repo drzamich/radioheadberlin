@@ -26,7 +26,7 @@
   const CHECKOUT_TIMEOUT = 4000; // Wait 2 seconds for checkout button
   const RELOAD_TIMEOUT = 12 * 1000; // Wait 12 seconds for initial text
   const SUCCESS_AUDIO_URL =
-    "https://www.myinstants.com/media/sounds/mlg-airhorn.mp3";
+    "https://www.myinstants.com/media/sounds/sad-meow-song.mp3";
   const SUCCESS_URL = "https://www.youtube.com/watch?v=jNY_wLukVW0?autoplay=1";
   const ACCESS_DENIED_URL =
     "https://www.youtube.com/watch?v=w7nrYizajmk?autoplay=1";
